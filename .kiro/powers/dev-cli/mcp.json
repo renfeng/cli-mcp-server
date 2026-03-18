@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "cli": {
+      "command": "npx",
+      "args": ["-y", "@renfeng/cli-mcp-server@0.1"],
+      "env": {
+        "CLI_TOOLS": "mvn,git",
+        "CLI_TIMEOUT": "60000"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "mvn",
+        "git"
+      ]
+    }
+  }
+}

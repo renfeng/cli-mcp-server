@@ -1,5 +1,5 @@
 {
-  "name": "@anthropic/cli-mcp-server",
+  "name": "@renfeng/cli-mcp-server",
   "version": "0.1.0",
   "description": "MCP server that wraps CLI tools (mvn, git, gradle, etc.) as individual MCP tools over stdio",
   "type": "module",
