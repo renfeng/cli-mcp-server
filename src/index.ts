@@ -6,8 +6,9 @@
  * A generic MCP server that exposes a single 'execute' tool for running
  * CLI commands over stdio. Uses execFile (no shell) to prevent injection.
  *
- * Trust and blocking are managed by Kiro's autoApprove in mcp.json —
- * the server itself has no allowlist. Any CLI on the user's PATH can be called.
+ * Reads Kiro IDE settings (trustedCommands, commandDenylist, terminalCommandTimeout)
+ * from the user's global settings and optional workspace file.
+ * No env var configuration needed — Kiro settings are the single source of truth.
  */
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
@@ -18,6 +19,8 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { loadTrustSettings, checkTrust } from "./trust.js";
+import type { KiroSettings } from "./trust.js";
 
 const execFileAsync = promisify(execFile);
 
@@ -27,7 +30,7 @@ const EXECUTE_TOOL = {
   name: "execute",
   description:
     "Execute a CLI command. The command is run directly via execFile (not through a shell) " +
-    "to prevent injection. Use for any CLI: mvn, git, gradle, docker, kubectl, npm, cargo, etc.",
+    "to prevent injection. Respects Kiro's trustedCommands and commandDenylist settings.",
   inputSchema: {
     type: "object" as const,
     properties: {
@@ -49,7 +52,7 @@ const EXECUTE_TOOL = {
       timeout: {
         type: "number" as const,
         description:
-          "Timeout in milliseconds. Default: 30000.",
+          "Timeout in milliseconds. Overrides Kiro's terminalCommandTimeout.",
       },
     },
     required: ["command", "args"],
@@ -103,11 +106,11 @@ export async function executeCli(
 }
 
 async function main(): Promise<void> {
-  const timeout =
-    parseInt(process.env.CLI_TIMEOUT || "", 10) || DEFAULT_TIMEOUT;
+  const kiroSettings: KiroSettings = loadTrustSettings();
+  const timeout = kiroSettings.terminalCommandTimeout || DEFAULT_TIMEOUT;
 
   const server = new Server(
-    { name: "terminal", version: "0.2.0" },
+    { name: "terminal", version: "0.3.0" },
     { capabilities: { tools: {} } },
   );
 
@@ -126,6 +129,16 @@ async function main(): Promise<void> {
     }
 
     const params = (rawArgs || {}) as unknown as ExecuteArgs;
+
+    // Check trust before executing
+    const trust = checkTrust(params.command, params.args || [], kiroSettings);
+    if (!trust.allowed) {
+      return {
+        content: [{ type: "text", text: trust.reason }],
+        isError: true,
+      };
+    }
+
     const result = await executeCli(
       params.command,
       params.args || [],

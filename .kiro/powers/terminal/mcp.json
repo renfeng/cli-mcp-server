@@ -2,7 +2,7 @@
   "mcpServers": {
     "terminal": {
       "command": "npx",
-      "args": ["-y", "@renfeng/cli-mcp-server@0.2"],
+      "args": ["-y", "@renfeng/cli-mcp-server@0.3"],
       "disabled": false,
       "autoApprove": [
         "execute"
