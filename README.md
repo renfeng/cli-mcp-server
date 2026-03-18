@@ -1,4 +1,4 @@
-# cli-mcp-server
+# terminal
 
 An MCP server that wraps command-line tools as individual MCP tools over stdio. Configure which CLIs to expose, and each becomes a tool that accepts `args` and optional `cwd`.
 

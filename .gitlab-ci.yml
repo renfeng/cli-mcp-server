@@ -89,6 +89,6 @@ mirror-github:
     - chmod 600 ~/.ssh/id_ed25519
     - ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
   script:
-    - git remote add github git@github.com:renfeng/cli-mcp-server.git || git remote set-url github git@github.com:renfeng/cli-mcp-server.git
+    - git remote add github git@github.com:renfeng/terminal.git || git remote set-url github git@github.com:renfeng/terminal.git
     - git push github HEAD:main --force-with-lease
   allow_failure: true

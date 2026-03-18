@@ -6,8 +6,8 @@ inclusion: manual
 
 ## Repository Setup
 
-- Origin: GitLab — `git@gitlab.com:renfeng.cn/cli-mcp-server.git`
-- Mirror: GitHub — `git@github.com:renfeng/cli-mcp-server.git`
+- Origin: GitLab — `git@gitlab.com:renfeng.cn/terminal.git`
+- Mirror: GitHub — `git@github.com:renfeng/terminal.git`
 - Branch protection: `main` is protected on GitLab (Maintainers only, no force push)
 - All changes go through merge requests on GitLab
 
@@ -68,7 +68,7 @@ To set it up on the new project:
 For the mirror job, a deploy key with write access is needed on the GitHub repo:
 
 1. Generate a key pair: `ssh-keygen -t ed25519 -C "gitlab-mirror" -f gitlab-mirror-key`
-2. Add the public key to GitHub: `github.com/renfeng/cli-mcp-server/settings/keys` (allow write access)
+2. Add the public key to GitHub: `github.com/renfeng/terminal/settings/keys` (allow write access)
 3. Add the private key as a CI variable on GitLab:
    ```
    Key: GITHUB_DEPLOY_KEY
@@ -97,7 +97,7 @@ glab ci status --branch main
 npm view @renfeng/cli-mcp-server version
 
 # Check GitHub mirror
-gh repo view renfeng/cli-mcp-server --web
+gh repo view renfeng/terminal --web
 ```
 
 ## Local Development

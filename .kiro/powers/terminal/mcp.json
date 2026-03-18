@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "cli": {
+    "terminal": {
       "command": "npx",
       "args": ["-y", "@renfeng/cli-mcp-server@0.1"],
       "env": {

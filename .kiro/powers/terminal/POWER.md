@@ -1,11 +1,11 @@
 ---
-name: "dev-cli"
-displayName: "Dev CLI"
+name: "terminal"
+displayName: "Terminal"
 description: "Expose any command-line tool as an MCP tool over stdio. Configure which CLIs to allow (mvn, git, gradle, docker, etc.) and each becomes a tool the agent can call with args and cwd."
 keywords: ["cli", "mvn", "maven", "git", "gradle", "docker", "kubectl", "npm", "cargo", "command", "shell", "terminal", "build", "deploy"]
 ---
 
-# Dev CLI
+# Terminal
 
 A single MCP server that wraps any command-line tool as an MCP tool. Each CLI listed in `CLI_TOOLS` becomes a separate tool with the same schema: `args` (string array) and optional `cwd`.
 

@@ -20,9 +20,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/renfeng.cn/cli-mcp-server.git"
+    "url": "https://gitlab.com/renfeng.cn/terminal.git"
   },
-  "homepage": "https://github.com/renfeng/cli-mcp-server",
+  "homepage": "https://github.com/renfeng/terminal",
   "engines": {
     "node": ">=18.0.0"
   },

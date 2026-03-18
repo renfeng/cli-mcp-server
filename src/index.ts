@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * cli-mcp-server
+ * terminal
  *
  * A generic MCP server that exposes CLI tools over stdio.
  * Each configured CLI becomes a separate MCP tool.
@@ -112,7 +112,7 @@ async function main(): Promise<void> {
   const config = getConfig();
 
   const server = new Server(
-    { name: "cli-mcp-server", version: "0.1.0" },
+    { name: "terminal", version: "0.1.0" },
     { capabilities: { tools: {} } },
   );
 
