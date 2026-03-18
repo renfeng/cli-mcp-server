@@ -1,0 +1,51 @@
+{
+  "name": "@anthropic/cli-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP server that wraps CLI tools (mvn, git, gradle, etc.) as individual MCP tools over stdio",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "cli-mcp-server": "dist/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "cli",
+    "maven",
+    "git",
+    "gradle",
+    "devtools"
+  ],
+  "author": "Frank Ren",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renfeng/cli-mcp-server.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "type-check": "tsc --noEmit",
+    "test": "vitest --run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.0"
+  }
+}
