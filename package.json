@@ -1,16 +1,18 @@
 {
-  "name": "@renfeng/cli-mcp-server",
-  "version": "0.3.0",
-  "description": "MCP server that wraps CLI tools (mvn, git, gradle, etc.) as individual MCP tools over stdio",
+  "name": "@renfeng/terminal",
+  "version": "0.4.0",
+  "description": "MCP server providing terminal/CLI tool execution for Kiro IDE — wraps mvn, git, gradle, and other CLI tools as MCP tools over stdio",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "cli-mcp-server": "dist/index.js"
+    "terminal-mcp": "dist/index.js"
   },
   "keywords": [
     "mcp",
     "model-context-protocol",
     "cli",
+    "terminal",
+    "kiro",
     "maven",
     "git",
     "gradle",

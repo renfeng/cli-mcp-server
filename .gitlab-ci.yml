@@ -11,7 +11,7 @@ stages:
 
 validate:
   stage: validate
-  image: node:20-alpine
+  image: node:24-alpine
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
@@ -27,7 +27,7 @@ validate:
 
 pipeline-guard:
   stage: validate
-  image: node:20-alpine
+  image: node:24-alpine
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
@@ -35,7 +35,7 @@ pipeline-guard:
 
 build:
   stage: build
-  image: node:20-alpine
+  image: node:24-alpine
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
@@ -54,7 +54,12 @@ build:
 
 publish-npm:
   stage: publish
-  image: node:20-alpine
+  image: node:24-alpine
+  id_tokens:
+    NPM_ID_TOKEN:
+      aud: "npm:registry.npmjs.org"
+    SIGSTORE_ID_TOKEN:
+      aud: sigstore
   needs:
     - job: build
       artifacts: true
@@ -69,13 +74,20 @@ publish-npm:
     - VERSION=$(node -p "require('./package.json').version")
     - echo "Version in package.json ${VERSION}"
     - |
-      if npm view "@renfeng/cli-mcp-server@${VERSION}" version 2>/dev/null; then
+      if npm view "@renfeng/terminal@${VERSION}" version 2>/dev/null; then
         echo "Version ${VERSION} already published — skipping"
         exit 0
       fi
-    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-    - npm publish --access public --ignore-scripts
-    - echo "Published @renfeng/cli-mcp-server@${VERSION}"
+    - |
+      # OIDC is the primary auth method. NPM_TOKEN fallback is only needed for
+      # the very first publish of a new package (trusted publisher can't be
+      # configured until the package exists on npm). Remove the fallback once
+      # OIDC trusted publishing is configured on @renfeng/terminal.
+      if [ -n "${NPM_TOKEN:-}" ]; then
+        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      fi
+    - npm publish --access public --ignore-scripts --provenance
+    - echo "Published @renfeng/terminal@${VERSION}"
 
 mirror-github:
   stage: mirror

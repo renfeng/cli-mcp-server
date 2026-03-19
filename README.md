@@ -5,7 +5,7 @@ An MCP server that exposes a single `execute` tool for running any CLI command o
 ## Quick Start
 
 ```bash
-npx @renfeng/cli-mcp-server
+npx @renfeng/terminal
 ```
 
 ## MCP Configuration
@@ -15,7 +15,7 @@ npx @renfeng/cli-mcp-server
   "mcpServers": {
     "terminal": {
       "command": "npx",
-      "args": ["-y", "@renfeng/cli-mcp-server@0.2"],
+      "args": ["-y", "@renfeng/terminal@0.4"],
       "autoApprove": ["execute"]
     }
   }
