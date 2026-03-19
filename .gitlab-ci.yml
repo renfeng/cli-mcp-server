@@ -78,14 +78,6 @@ publish-npm:
         echo "Version ${VERSION} already published — skipping"
         exit 0
       fi
-    - |
-      # OIDC is the primary auth method. NPM_TOKEN fallback is only needed for
-      # the very first publish of a new package (trusted publisher can't be
-      # configured until the package exists on npm). Remove the fallback once
-      # OIDC trusted publishing is configured on @renfeng/terminal.
-      if [ -n "${NPM_TOKEN:-}" ]; then
-        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-      fi
     - npm publish --access public --ignore-scripts --provenance
     - echo "Published @renfeng/terminal@${VERSION}"
 
